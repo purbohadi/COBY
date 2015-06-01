@@ -1,0 +1,25 @@
+2
+5 4
+qwer
+asdf
+zxcv
+yuio
+hjkl
+3
+zxc
+yui
+zuk
+10 11
+abcdefghijW
+lmnopqrstHv
+wxyzabcdifg
+hKjklmnTpqr
+stCvwxezabc
+qweAtyqwert
+qwerLyqwert
+qwertBqwert
+qwertyqwert
+qwertyqwert
+2
+black
+white

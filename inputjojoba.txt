@@ -1,0 +1,15 @@
+3
+5
++abcd -ef
++bad -c
++abc
++jojoba -jojon
+
++baba
+2
++abc
++def -abc
+3
++senin -rabu
++selasa -minggu
++sabtu -jumat
