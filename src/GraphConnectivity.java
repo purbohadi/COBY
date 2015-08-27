@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class GraphConnectivity {
     static int Answer, I;
     static String N;
-    static TheGraph g;
+    static BidirectionalGraph g;
 
     public static void main(String args[]) throws Exception {
 	/*
@@ -34,7 +34,7 @@ public class GraphConnectivity {
 	    while (sc.hasNextLine()) {
 		N = sc.next();
 		I = alphabet.indexOf(N);
-		g = new TheGraph(I + 1);
+		g = new BidirectionalGraph(I + 1);
 		sc.nextLine();
 		while (sc.hasNextLine()) {
 		    String line=sc.nextLine();
@@ -53,7 +53,7 @@ public class GraphConnectivity {
 	}
     }
 
-    public static int DFS(TheGraph g) {
+    public static int DFS(BidirectionalGraph g) {
 	Stack stack = new Stack(I + 1);
 	int visited[] = new int[I + 1];
 	int cc = 0;
@@ -84,41 +84,9 @@ public class GraphConnectivity {
 	return cc;
     }
 
-    private static int countMaxCC(TheGraph g) {
+    private static int countMaxCC(BidirectionalGraph g) {
 	return DFS(g);
     }
-}
-
-class TheGraph {
-    private boolean adjacencyMatrix[][];
-    private int vertexCount;
-
-    public TheGraph(int vCount) {
-	this.vertexCount = vCount;
-	this.adjacencyMatrix = new boolean[vertexCount][vertexCount];
-    }
-
-    public void addEdge(int i, int j) {
-	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount) {
-	    this.adjacencyMatrix[i][j] = true;
-	    adjacencyMatrix[j][i] = true;
-	}
-    }
-
-    public void removeEdge(int i, int j) {
-	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount) {
-	    this.adjacencyMatrix[i][j] = false;
-	    adjacencyMatrix[j][i] = false;
-	}
-    }
-
-    public boolean isEdge(int i, int j) {
-	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount)
-	    return adjacencyMatrix[i][j];
-	else
-	    return false;
-    }
-
 }
 
 class Stack {

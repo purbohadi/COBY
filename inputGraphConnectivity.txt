@@ -1,5 +1,18 @@
 12
 
+D
+AB
+AC
+DD
+
+D
+AB
+AC
+BC
+CA
+CD
+DD
+
 B
 AB
 

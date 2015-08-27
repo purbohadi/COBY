@@ -25,11 +25,13 @@ public class FollowTheDots {
 				}
 			}
 			
-			Arrays.sort(map, new Comparator<double[]>() {
-			    public int compare(double[] a, double[] b) {
-			        return Double.compare(a[1], b[1]);
-			    }
-			});	        
+//			Arrays.sort(map, new Comparator<double[]>() {
+//			    public int compare(double[] a, double[] b) {
+//			        return Double.compare(a[1], b[1]);
+//			    }
+//			});
+			bubbleSortArr(map, 1);
+			
 			Answer=0;
 			for (int i = 1; i < N; i++) {
 				Answer+=countDistance(map[i-1][0], map[i-1][1], map[i][0], map[i][1]);
@@ -47,4 +49,27 @@ public class FollowTheDots {
 	}
 	
 
+	public static double[][] bubbleSortArr(double[][] inArr, int idx){
+	    
+	    double[][] temp = new double[inArr.length][inArr[0].length];
+	    boolean finished = false;
+	    
+	    while (!finished) {
+		finished=true;
+		for (int i = 0; i < inArr.length-1; i++) {
+		    if (inArr[i][idx]>=inArr[i+1][idx]) {
+			for (int j = 0; j < inArr[i].length; j++) {
+			    temp[i][j]=inArr[i][j];
+			    inArr[i][j]=inArr[i+1][j];
+			    inArr[i+1][j]=temp[i][j];
+			}
+			finished=true;
+		    }
+		}
+	    }
+	    return inArr;
+	}
+	
 }
+
+

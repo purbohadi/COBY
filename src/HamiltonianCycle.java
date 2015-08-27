@@ -81,59 +81,59 @@ public class HamiltonianCycle {
 	return false;
     }
     
-    public static boolean isHamiltonianCycle(BidirectionalGraph graph) {
-	
-	path=new int[N];
-	for (int i = 0; i < N; i++) {
-	    path[i]=-1;
-	}
-	
-	path[0]=0;
-	if (!hamCycleUtil(graph, path, 1)) {
-	    return false;
-	}
-	printSolution(path);
-	return true;
-    }
-
-    public static boolean isSafeToAdd(int v, BidirectionalGraph graph, int[] path, int pos){
-	
-	if (!graph.isEdge(path[pos-1], v)) {
-	    return false;
-	}
-	for (int i = 0; i < pos; i++) {
-	    if (path[i]==v) {
-		return false;
-	    }
-	}
-	
-	return true;
-    }
-    
-    public static boolean hamCycleUtil(BidirectionalGraph graph, int[] path, int pos){
-	
-	if (pos==N) {
-	    if (graph.isEdge(path[pos-1], path[0])) {
-		return true;
-	    }else{
-		return false;
-	    }
-	}
-	
-	for (int v = 1; v < N; v++) {
-	    if (isSafeToAdd(v, graph, path, pos)) {
-		path[pos]=v;
-		
-		if (hamCycleUtil(graph, path, pos+1)) {
-		    return true;
-		}
-		
-		path[pos]=-1;
-	    }
-	}
-	
-	return false;
-    }
+//    public static boolean isHamiltonianCycle(BidirectionalGraph graph) {
+//	
+//	path=new int[N];
+//	for (int i = 0; i < N; i++) {
+//	    path[i]=-1;
+//	}
+//	
+//	path[0]=0;
+//	if (!hamCycleUtil(graph, path, 1)) {
+//	    return false;
+//	}
+//	printSolution(path);
+//	return true;
+//    }
+//
+//    public static boolean isSafeToAdd(int v, BidirectionalGraph graph, int[] path, int pos){
+//	
+//	if (!graph.isEdge(path[pos-1], v)) {
+//	    return false;
+//	}
+//	for (int i = 0; i < pos; i++) {
+//	    if (path[i]==v) {
+//		return false;
+//	    }
+//	}
+//	
+//	return true;
+//    }
+//    
+//    public static boolean hamCycleUtil(BidirectionalGraph graph, int[] path, int pos){
+//	
+//	if (pos==N) {
+//	    if (graph.isEdge(path[pos-1], path[0])) {
+//		return true;
+//	    }else{
+//		return false;
+//	    }
+//	}
+//	
+//	for (int v = 1; v < N; v++) {
+//	    if (isSafeToAdd(v, graph, path, pos)) {
+//		path[pos]=v;
+//		
+//		if (hamCycleUtil(graph, path, pos+1)) {
+//		    return true;
+//		}
+//		
+//		path[pos]=-1;
+//	    }
+//	}
+//	
+//	return false;
+//    }
 
     public static void printSolution(int[] path){
 	for (int i = 0; i < N; i++) {
@@ -162,7 +162,7 @@ class BidirectionalGraph {
     public void removeEdge(int i, int j) {
 	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount) {
 	    this.adjacencyMatrix[i][j] = false;
-	    // adjacencyMatrix[j][i] = false;
+	    adjacencyMatrix[j][i] = false;
 	}
     }
 

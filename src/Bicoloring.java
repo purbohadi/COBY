@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Bicoloring {
 
     static int N, I;
-    static Graph graph;
+    static BidirectionalGraph graph;
 
     public static void main(String[] args) throws FileNotFoundException {
 	Scanner sc = new Scanner(new File("inputBicoloring.txt"));
@@ -13,7 +13,7 @@ public class Bicoloring {
 	for (int test_case = 0; test_case < T; test_case++) {
 	    N = sc.nextInt();
 	    I = sc.nextInt();
-	    graph = new Graph(N);
+	    graph = new BidirectionalGraph(N);
 	    for (int j = 0; j < I; j++) {
 		int u = sc.nextInt();
 		int v = sc.nextInt();
@@ -27,7 +27,7 @@ public class Bicoloring {
 	}
     }
 
-    public static boolean isBicolor(Graph g, int src) {
+    public static boolean isBicolor(BidirectionalGraph g, int src) {
 	int[] colorArr = new int[N];
 	for (int i = 0; i < N; i++) {
 	    colorArr[i] = -1;
@@ -109,11 +109,11 @@ class Queue {
     }
 }
 
-class Graph {
+class DirectedGraph {
     private boolean adjacencyMatrix[][];
     private int vertexCount;
 
-    public Graph(int vCount) {
+    public DirectedGraph(int vCount) {
 	this.vertexCount = vCount;
 	this.adjacencyMatrix = new boolean[vertexCount][vertexCount];
     }
@@ -121,14 +121,13 @@ class Graph {
     public void addEdge(int i, int j) {
 	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount) {
 	    this.adjacencyMatrix[i][j] = true;
-//	     adjacencyMatrix[j][i] = true;
+	    this.adjacencyMatrix[j][i] = true;
 	}
     }
 
     public void removeEdge(int i, int j) {
 	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount) {
 	    this.adjacencyMatrix[i][j] = false;
-//	     adjacencyMatrix[j][i] = false;
 	}
     }
 
