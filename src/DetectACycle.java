@@ -53,11 +53,6 @@ public class DetectACycle {
 	boolean[] reStack = new boolean[N];
 	
 	for (int i = 0; i < N; i++) {
-	    visited[i]=false;
-	    reStack[i]=false;
-	}
-	
-	for (int i = 0; i < N; i++) {
 	    if (DFS(i, visited, reStack)) {
 		return true;
 	    }
@@ -74,7 +69,8 @@ public class DetectACycle {
 	    reStack[v]=true;
 	    for (int i = 0; i < N; ++i) {
 		if (graph.isEdge(v, i)) {
-		    if ((!visited[i]&&DFS(i, visited, reStack))||reStack[i]) {
+		    if ((!visited[i]&&DFS(i, visited, reStack))
+			    ||reStack[i]) {
 			return true;
 		    }
 		}

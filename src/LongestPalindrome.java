@@ -32,7 +32,7 @@ public class LongestPalindrome {
 	int strLength = input.length();
 	int[][] L = new int[strLength][strLength];
 
-	for (int i = 0; i < strLength; i++) {
+	for (int i = 0; i < strLength; i++) {// initialize L array
 	    L[i][i] = 1;
 	}
 

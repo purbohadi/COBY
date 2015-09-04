@@ -33,7 +33,7 @@ public class HamiltonianCycle {
 		}
 		break;
 	    }
-	    if (isHC(graph)) {
+	    if (isHC()) {
 		System.out.println("#" + (test_case + 1) + " " + "Y");
 	    } else {
 		System.out.println("#" + (test_case + 1) + " " + "N");
@@ -42,7 +42,7 @@ public class HamiltonianCycle {
     }
     
     
-    public static boolean isHC(BidirectionalGraph graph){
+    public static boolean isHC(){
 	
 	path = new int[N];
 	boolean[] visited = new boolean[N];
@@ -51,7 +51,7 @@ public class HamiltonianCycle {
 	path[0]=source;
 	visited[0]=true;
 	
-	if (isHcUtil(graph, visited, source, path, pos)) {
+	if (isHcUtil(visited, source, path, pos)) {
 	    return true;
 	}
 	
@@ -59,7 +59,7 @@ public class HamiltonianCycle {
     }
     
     
-    public static boolean isHcUtil(BidirectionalGraph graph, boolean[] visited, int source, int[] path, int pos){
+    public static boolean isHcUtil(boolean[] visited, int source, int[] path, int pos){
 	
 	if (pos==N) {
 	    return graph.isEdge(path[pos-1], 0);
@@ -70,7 +70,7 @@ public class HamiltonianCycle {
 		visited[v]=true;
 		path[pos]=v;
 		
-		if (isHcUtil(graph, visited, v, path, pos+1)) {
+		if (isHcUtil(visited, v, path, pos+1)) {
 		    return true;
 		}
 		

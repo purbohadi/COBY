@@ -49,11 +49,11 @@ public class GraphConnectivity {
 		}
 		break;
 	    }
-	    System.out.println("#" + (test_case + 1) + " " + (countMaxCC(g)));
+	    System.out.println("#" + (test_case + 1) + " " + (countMaxCC()));
 	}
     }
 
-    public static int DFS(BidirectionalGraph g) {
+    public static int DFS() {
 	Stack stack = new Stack(I + 1);
 	int visited[] = new int[I + 1];
 	int cc = 0;
@@ -84,8 +84,8 @@ public class GraphConnectivity {
 	return cc;
     }
 
-    private static int countMaxCC(BidirectionalGraph g) {
-	return DFS(g);
+    private static int countMaxCC() {
+	return DFS();
     }
 }
 

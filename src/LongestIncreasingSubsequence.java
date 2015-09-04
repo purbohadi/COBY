@@ -24,13 +24,14 @@ public class LongestIncreasingSubsequence {
 
 	    lis = new int[N];
 	    
-	    for (int i = 0; i < N; i++) {
+	    for (int i = 0; i < N; i++) {// initialize LIS array
 		lis[i]=1;
 	    }
 	    
 	    for (int i = 1; i < N; i++) {
 		for (int j = 0; j <i; j++) {
-		    if (array[i]>array[j]&&lis[i]<lis[j]+1) {
+		    if (array[i]>array[j]&&
+			    lis[i]<lis[j]+1) {
 			lis[i]=lis[j]+1;
 		    }
 		}

@@ -36,30 +36,15 @@ public class FollowTheDots {
 		}
 	    }
 
-	    // Arrays.sort(map, new Comparator<double[]>() {
-	    // public int compare(double[] a, double[] b) {
-	    // return Double.compare(a[1], b[1]);
-	    // }
-	    // });
-	    
-	    PrimsMST(graph,(test_case+1));
+	    PrimsMST((test_case+1));
 	    
 	    bubbleSortArr(map, 1);
 
-//	    Answer = 0;
-//	    for (int i = 1; i < N; i++) {
-//		Answer += countDistance(map[i - 1][0], map[i - 1][1],
-//			map[i][0], map[i][1]);
-//	    }
-
-	    // System.out.println(String.format( "%.2f", Answer));
-//	    System.out.println("Case #" + (test_case + 1) + " : "
-//		    + String.format("%.2f", Answer));
 	}
 
     }
 
-    public static void PrimsMST(BidirectionalWeightedGraph graph, int test_case) {
+    public static void PrimsMST(int test_case) {
 	int[] parent = new int[N];
 	double[] key = new double[N];
 	boolean[] mstSet = new boolean[N];
@@ -69,7 +54,7 @@ public class FollowTheDots {
 	    mstSet[i]=false;
 	}
 	
-	key[0]=0;
+	key[0]=0;// init key & parent
 	parent[0]=-1;
 	
 	for (int count = 0; count < N-1; count++) {
@@ -77,7 +62,9 @@ public class FollowTheDots {
 	    mstSet[u]=true;
 	    
 	    for (int v = 0; v < N; v++) {
-		if (graph.getWeight(u, v)!=0&&!mstSet[v]&& graph.getWeight(u, v)<key[v]) {
+		if (graph.getWeight(u, v)!=0
+			&&!mstSet[v]
+				&& graph.getWeight(u, v)<key[v]) {
 		    parent[v]=u;
 		    key[v]=graph.getWeight(u, v);
 		}
@@ -88,12 +75,16 @@ public class FollowTheDots {
     }
     
     public static void printMST(int[] parent, int test_case){
-	for (int i = 1; i < N; i++) {
-//	    System.out.println(parent[i] +" - "+i+" "+graph.getWeight(i, parent[i]));
-	    Answer+=graph.getWeight(i, parent[i]);
+	
+	System.out.println("#"+test_case);
+	for (int i = 0; i < parent.length; i++) {
+	    System.out.println(parent[i]);
 	}
-//	System.out.println("#"+test_case+" "+Answer);
-	System.out.println("#"+test_case+" "+String.format( "%.2f", Answer));
+	
+//	for (int i = 1; i < N; i++) {
+//	    Answer+=graph.getWeight(i, parent[i]);
+//	}
+//	System.out.println("#"+test_case+" "+String.format( "%.2f", Answer));
     }
     
     public static int minimumKey(double[] key, boolean[] mstSet){
@@ -102,7 +93,8 @@ public class FollowTheDots {
 	int min_idx = 0;
 	
 	for (int v = 0; v < N; v++) {
-	    if (!mstSet[v]&&key[v]<min) {
+	    if (!mstSet[v]
+		    &&key[v]<min) {
 		min=key[v];
 		min_idx=v;
 	    }
@@ -118,7 +110,7 @@ public class FollowTheDots {
 
     public static double[][] bubbleSortArr(double[][] inArr, int idx) {
 
-	double[][] temp = new double[inArr.length][inArr[0].length];
+	double temp = 0;
 	boolean finished = false;
 
 	while (!finished) {
@@ -126,9 +118,9 @@ public class FollowTheDots {
 	    for (int i = 0; i < inArr.length - 1; i++) {
 		if (inArr[i][idx] >= inArr[i + 1][idx]) {
 		    for (int j = 0; j < inArr[i].length; j++) {
-			temp[i][j] = inArr[i][j];
+			temp = inArr[i][j];
 			inArr[i][j] = inArr[i + 1][j];
-			inArr[i + 1][j] = temp[i][j];
+			inArr[i + 1][j] = temp;
 		    }
 		    finished = true;
 		}

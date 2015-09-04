@@ -25,7 +25,7 @@ public class ArticulationBridges {
 	    visited = new boolean[N];
 	    graph = new UndirectionalGraph(N);
 	    countcl = 0;
-	    Pair[] bridge = new Pair[N];
+	    Pair[] bridges = new Pair[N];
 	    for (int i = 0; i < N; i++) {
 		int j = sc.nextInt();
 		int edges = sc.nextInt();
@@ -42,11 +42,11 @@ public class ArticulationBridges {
 		visited[i] = false;
 	    }
 
-	    DFS(visited, 0, disc, low, bridge, parent);
+	    DFS(visited, 0, disc, low, bridges, parent);
 
 	    for (int i = 0; i < N; i++) {
 		if (!visited[i]) {
-		    DFS(visited, i, disc, low, bridge, parent);
+		    DFS(visited, i, disc, low, bridges, parent);
 		}
 	    }
 
@@ -56,11 +56,10 @@ public class ArticulationBridges {
 	    Pair[] answers = new Pair[countcl];
 
 	    int count = 0;
-	    for (int i = 0; i < bridge.length; i++) {
-		if (bridge[i] != null) {
-		    answers[count] = bridge[i];
+	    for (int i = 0; i < bridges.length; i++) {
+		if (bridges[i] != null) {
+		    answers[count] = bridges[i];
 		    count++;
-		    // System.out.println(bridge[i]);
 		}
 	    }
 
@@ -75,7 +74,7 @@ public class ArticulationBridges {
     }
 
     public static void DFS(boolean[] visited, int u, int[] disc, int[] low,
-	    Pair[] bridge, int[] parent) {
+	    Pair[] bridges, int[] parent) {
 
 	visited[u] = true;
 
@@ -88,15 +87,15 @@ public class ArticulationBridges {
 		v = i;
 		if (disc[v] == -1) {
 		    parent[v] = u;
-		    DFS(visited, v, disc, low, bridge, parent);
+		    DFS(visited, v, disc, low, bridges, parent);
 		    low[u] = minimum(low[u], low[v]);
 		    if (low[v] > disc[u]) {
-			bridge[i] = new Pair(u, v);
+			bridges[i] = new Pair(u, v);
 			countcl++;
 		    }
 
 		    if (low[v] >= disc[u] && low[u] >= disc[v]) {
-			bridge[i] = new Pair(u, v);
+			bridges[i] = new Pair(u, v);
 			countcl++;
 		    }
 

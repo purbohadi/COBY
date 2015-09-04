@@ -33,12 +33,12 @@ public class SendingEmail {
 //		break;
 	    }
 
-	    countMSWithDjikstra(graph, S, D, (test_case + 1));
+	    countMSWithDjikstra(S, D, (test_case + 1));
 
 	}
     }
 
-    public static void countMSWithDjikstra(WeightedGraph graph, int src,
+    public static void countMSWithDjikstra(int src,
 	    int dest, int testcase) {
 
 	int[] distance = new int[n];
@@ -67,11 +67,6 @@ public class SendingEmail {
 		}
 	    }
 	}
-	// System.out.println("Vertex         Distance");
-	// for (int i = 0; i < distance.length; i++) {
-	// System.out.println(i+"      "+distance[i]);
-	// }
-
 	if (distance[D] == Integer.MAX_VALUE) {
 	    System.out.println("#" + testcase + " unreacheable");
 	} else {

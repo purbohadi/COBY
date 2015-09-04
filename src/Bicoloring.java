@@ -20,33 +20,34 @@ public class Bicoloring {
 		graph.addEdge(u, v);
 	    }
 
-	    if (isBicolor(graph, 0))
-		System.out.println("#"+(test_case+1)+" BICOLORABLE.");
+	    if (isBicolor())
+		System.out.println("#" + (test_case + 1) + " BICOLORABLE.");
 	    else
-		System.out.println("#"+(test_case+1)+" NOT BICOLORABLE.");
+		System.out.println("#" + (test_case + 1) + " NOT BICOLORABLE.");
 	}
     }
 
-    public static boolean isBicolor(BidirectionalGraph g, int src) {
+    public static boolean isBicolor() {
 	int[] colorArr = new int[N];
-	for (int i = 0; i < N; i++) {
+	for (int i = 0; i < N; i++) {// initialize colorArr to default value 
 	    colorArr[i] = -1;
 	}
-	colorArr[src] = 1;
+	colorArr[0] = 1; // set source to true
 
 	Queue q = new Queue(N);
-	q.insert(src);
+	q.insert(0);
 
 	while (!q.isEmpty()) {
 	    int u = q.peek();
 	    q.remove();
-
 	    for (int v = 0; v < N; v++) {
-		if (graph.isEdge(u, v) && colorArr[v] == -1) {
-		    colorArr[v] = 1 - colorArr[u];
-		    q.insert(v);
-		} else if (graph.isEdge(u, v) && (colorArr[v] == colorArr[u])) {
-		    return false;
+		if (graph.isEdge(u, v)) {
+		    if (colorArr[v] == -1) {
+			colorArr[v] = 1 - colorArr[u];
+			q.insert(v);
+		    } else if (colorArr[v] == colorArr[u]) {
+			return false;
+		    }
 		}
 	    }
 	}
@@ -109,11 +110,11 @@ class Queue {
     }
 }
 
-class DirectedGraph {
+class UndirectedGraph {
     private boolean adjacencyMatrix[][];
     private int vertexCount;
 
-    public DirectedGraph(int vCount) {
+    public UndirectedGraph(int vCount) {
 	this.vertexCount = vCount;
 	this.adjacencyMatrix = new boolean[vertexCount][vertexCount];
     }
@@ -128,6 +129,7 @@ class DirectedGraph {
     public void removeEdge(int i, int j) {
 	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount) {
 	    this.adjacencyMatrix[i][j] = false;
+	    this.adjacencyMatrix[j][i] = false;
 	}
     }
 

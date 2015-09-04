@@ -31,11 +31,11 @@ public class CoinChange {
 	    
 	    for (int i = 1; i < N+1; i++) {
 		for (int j = 0; j < S; j++) {
-		    x=(i-coins[j]>=0)? Table[i-coins[j]][j]:0;
+		    x=(i-coins[j]>=0) ? Table[i-coins[j]][j] : 0;
 		    
-		    y=(j>=1)?Table[i][j-1]:0;
+		    y=(j>=1) ? Table[i][j-1] : 0;
 		    
-		    Table[i][j]=x+y;
+		    Table[i][j]= x + y;
 		}
 	    }
 	    

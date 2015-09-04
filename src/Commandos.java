@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Commandos {
 
     public static int N, R, Answer;
-    public static UndirectedGraph graph;
+    public static UndirectedWeightedGraph graph;
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -14,88 +14,109 @@ public class Commandos {
 	int T = sc.nextInt();
 	for (int test_case = 0; test_case < T; test_case++) {
 
-	    Answer = 0;
 	    N = sc.nextInt();
 	    R = sc.nextInt();
 
-	    graph = new UndirectedGraph(N);
+	    graph = new UndirectedWeightedGraph(N);
 
 	    for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-		    graph.addEdge(i, j, 0);
+		    graph.addEdge(i, j, Integer.MAX_VALUE);
 		}
 	    }
 
 	    for (int i = 0; i < R; i++) {
 		sc.nextLine();
-		graph.addEdge(sc.nextInt(), sc.nextInt());
+		graph.addEdge(sc.nextInt(), sc.nextInt(), 1);
 	    }
 
 	    sc.nextLine();
 	    int S = sc.nextInt();
 	    int D = sc.nextInt();
-	    if (S < D) {
-		floydWarshell(graph, S, D, (test_case + 1));
-	    }else{
-		floydWarshell(graph, D, S, (test_case+1));
+
+	    int[][] distances = floydWarshell();
+
+	    Answer = distances[S][D];
+	    
+	    if (Answer==Integer.MAX_VALUE) {
+		Answer=1;
 	    }
 
+	    for (int i = 1; i < N; i++) {
+		int count = 0;
+
+		if (distances[S][i] != Integer.MAX_VALUE) {
+		    count += distances[S][i];
+		}
+		if (distances[i][D] != Integer.MAX_VALUE) {
+		    count += distances[i][D];
+		}
+		Answer = Math.max(Answer, count);
+	    }
+
+	    System.out.println("#" + (test_case + 1) + " " + Answer);
 	}
 
     }
 
-    public static void floydWarshell(UndirectedGraph graph, int S, int D, int testCase){
-	int[][] dist =new int[N][N];
-	
+    public static int[][] floydWarshell() {
+	int[][] dist = new int[N][N];
+
 	for (int i = 0; i < N; i++) {
 	    for (int j = 0; j < N; j++) {
-		dist[i][j]=graph.getWeight(i, j);
+		dist[i][j] = graph.getWeight(i, j);
 	    }
 	}
-	
-	for (int from = 0; from < N; from++) {
-	    for (int to = 0; to < N; to++) {
-		for (int via = 0; via < N; via++) {
-		    if (dist[via][to]+dist[from][via] < dist[from][to]) {
-			dist[from][to]=dist[from][via]+dist[via][to];
+
+	for (int via = 0; via < N; via++) {
+	    for (int from = 0; from < N; from++) {
+		for (int to = 0; to < N; to++) {
+		    if (dist[from][via] != Integer.MAX_VALUE
+			    && dist[via][to] != Integer.MAX_VALUE && from != to) {
+			if (dist[from][to] > dist[from][via] + dist[via][to]) {
+			    dist[from][to] = dist[from][via] + dist[via][to];
+			}
 		    }
 		}
 	    }
 	}
-	
-	for (int i = S; i < D; i++) {
-	    Answer+=dist[i][i+1];
-	}
-	
-	System.out.println("#"+testCase+" "+Answer);
-	
-	printSolution(dist);
+
+	return dist;
     }
 
-    public static void printSolution(int[][] dist) {
-	for (int i = 0; i < N; i++) {
-	    for (int j = 0; j < N; j++) {
-		System.out.print(dist[i][j]);
+    public static void printAllPath(int u, int d, boolean[] visited,
+	    int[] path, int idx) {
+
+	visited[u] = true;
+	path[idx] = u;
+	idx++;
+
+	if (u == d) {
+	    for (int i = 0; i < idx; i++) {
+		System.out.print(path[i] + " ");
 	    }
 	    System.out.println();
+	} else {
+	    for (int i = 0; i < N; ++i) {
+		if (graph.isEdge(u, i) > 0 && !visited[i]) {
+		    printAllPath(i, d, visited, path, idx);
+		}
+	    }
 	}
+
+	idx--;
+	visited[u] = false;
     }
+
 }
 
-class UndirectedGraph {
+class UndirectedWeightedGraph {
     private int adjacencyMatrix[][];
     private int vertexCount;
 
-    public UndirectedGraph(int vCount) {
+    public UndirectedWeightedGraph(int vCount) {
 	this.vertexCount = vCount;
 	this.adjacencyMatrix = new int[vertexCount][vertexCount];
-    }
-
-    public void addEdge(int i, int j) {
-	if (i >= 0 && i < vertexCount && j >= 0 && j < vertexCount) {
-	    this.adjacencyMatrix[i][j] = 1;
-	    adjacencyMatrix[j][i] = 1;
-	}
     }
 
     public void addEdge(int i, int j, int w) {

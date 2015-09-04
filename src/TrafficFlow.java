@@ -62,9 +62,6 @@ public class TrafficFlow {
 	    }
 	}
 	System.out.println("#"+test_case+" "+result[e-1].weight);
-//	for (int a=0;a<e;a++) {
-//	    System.out.println(result[a].src+"--"+result[a].dest+"=="+result[a].weight);
-//	}
     }
     
     public static void union(Subset[] subsets, int x, int y){
