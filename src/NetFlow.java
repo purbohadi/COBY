@@ -48,53 +48,38 @@ public class NetFlow {
     }
 
     public static int FordFulkerson(int S, int D) {
-
 	int u, v;
-
 	int[][] rGraph = new int[N][N];
-
-	for (u = 0; u < N; u++) {
-	    for (v = 0; v < N; v++) {
+	for (u = 0; u < N; u++)
+	    for (v = 0; v < N; v++)
 		rGraph[u][v] = graph.getWeight(u, v);
-	    }
-	}
-
 	int[] parent = new int[N];
 	int maxFlow = 0;
-
 	while (BFS(rGraph, S, D, parent)) {
 	    int path_flow = Integer.MAX_VALUE;
-
 	    for (v = D; v != S; v = parent[v]) {
 		u = parent[v];
 		path_flow = Math.min(path_flow, rGraph[u][v]);
 	    }
-
 	    for (v = D; v != S; v = parent[v]) {
 		u = parent[v];
 		rGraph[u][v] -= path_flow;
 		rGraph[v][u] += path_flow;
 	    }
-
 	    maxFlow += path_flow;
 	}
-
 	return maxFlow;
     }
 
     public static boolean BFS(int[][] rGraph, int S, int D, int[] parent) {
-
 	boolean[] visited = new boolean[N];
-
 	Queue q = new Queue(N);
 	q.insert(S);
 	visited[S] = true;
 	parent[S] = -1;
-
 	while (!q.isEmpty()) {
 	    int u = q.peek();
 	    q.remove();
-
 	    for (int v = 0; v < N; v++) {
 		if (!visited[v] && rGraph[u][v] > 0) {
 		    q.insert(v);
@@ -103,7 +88,6 @@ public class NetFlow {
 		}
 	    }
 	}
-
 	return (visited[D]);
     }
 

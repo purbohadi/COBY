@@ -94,7 +94,7 @@ public class FollowTheDots {
 	
 	for (int v = 0; v < N; v++) {
 	    if (!mstSet[v]
-		    &&key[v]<min) {
+		    &&key[v]<=min) {
 		min=key[v];
 		min_idx=v;
 	    }

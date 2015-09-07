@@ -136,15 +136,14 @@ public class Interstellar {
 	    }
 	}
 
-	for (int from = 0; from < limit; from++) {
-	    for (int to = 0; to < limit; to++) {
-		for (int via = 0; via < limit; via++) {
-		    if (dist[from][to] > dist[via][to] + dist[from][via]) {
-			dist[from][to] = dist[via][to] + dist[from][via];
+	for (int via = 0; via < N; via++) 
+	    for (int from = 0; from < N; from++) 
+		for (int to = 0; to < N; to++) 
+		    if (dist[from][via] != Integer.MAX_VALUE
+			    && dist[via][to] != Integer.MAX_VALUE && from != to) {
+			if (dist[from][to] > dist[from][via] + dist[via][to])
+			    dist[from][to] = dist[from][via] + dist[via][to];
 		    }
-		}
-	    }
-	}
 
 	return dist;
     }

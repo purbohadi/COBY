@@ -7,7 +7,7 @@ public class ArticulationBridges {
     public static int N, countcl;
     public static UndirectionalGraph graph;
     public static int[] disc, low, parent;
-    private static int time = 1;
+    private static int idx = 1;
     private static boolean[] visited;
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -68,21 +68,16 @@ public class ArticulationBridges {
 	    for (int i = 0; i < answers.length; i++) {
 		System.out.println(answers[i]);
 	    }
-
 	}
-
     }
 
     public static void DFS(boolean[] visited, int u, int[] disc, int[] low,
 	    Pair[] bridges, int[] parent) {
 
 	visited[u] = true;
-
-	disc[u] = low[u] = time++;
-
+	disc[u] = low[u] = idx++;
 	int v = -1;
 	for (int i = 0; i < N; i++) {
-
 	    if (graph.isEdge(u, i)) {
 		v = i;
 		if (disc[v] == -1) {
@@ -93,12 +88,10 @@ public class ArticulationBridges {
 			bridges[i] = new Pair(u, v);
 			countcl++;
 		    }
-
 		    if (low[v] >= disc[u] && low[u] >= disc[v]) {
 			bridges[i] = new Pair(u, v);
 			countcl++;
 		    }
-
 		} else if (v != parent[u]) {
 		    low[u] = minimum(low[u], disc[v]);
 		}

@@ -53,7 +53,6 @@ public class Commandos {
 		}
 		Answer = Math.max(Answer, count);
 	    }
-
 	    System.out.println("#" + (test_case + 1) + " " + Answer);
 	}
 
@@ -61,26 +60,18 @@ public class Commandos {
 
     public static int[][] floydWarshell() {
 	int[][] dist = new int[N][N];
-
-	for (int i = 0; i < N; i++) {
-	    for (int j = 0; j < N; j++) {
+	for (int i = 0; i < N; i++) 
+	    for (int j = 0; j < N; j++)
 		dist[i][j] = graph.getWeight(i, j);
-	    }
-	}
-
-	for (int via = 0; via < N; via++) {
-	    for (int from = 0; from < N; from++) {
-		for (int to = 0; to < N; to++) {
+	    
+	for (int via = 0; via < N; via++) 
+	    for (int from = 0; from < N; from++) 
+		for (int to = 0; to < N; to++) 
 		    if (dist[from][via] != Integer.MAX_VALUE
 			    && dist[via][to] != Integer.MAX_VALUE && from != to) {
-			if (dist[from][to] > dist[from][via] + dist[via][to]) {
+			if (dist[from][to] > dist[from][via] + dist[via][to])
 			    dist[from][to] = dist[from][via] + dist[via][to];
-			}
 		    }
-		}
-	    }
-	}
-
 	return dist;
     }
 
