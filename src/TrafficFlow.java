@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class TrafficFlow {
 
-    public static int N, M, U, V, C;
+    public static int N, M;
     public static Edge[] edges;
     public static int Answer;
 
@@ -30,7 +30,6 @@ public class TrafficFlow {
 	    bubbleSortArr(edges);
 	    
 	    KruskalMST(edges,(test_case+1));
-
 	}
     }
 
@@ -112,6 +111,7 @@ class Subset {
 }
 
 class Edge {
+    
     int src;
     int dest;
     int weight;
