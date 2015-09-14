@@ -21,6 +21,15 @@ public class PlanningTour {
 	    M = sc.nextInt();
 
 	    graph = new BidirectionalGraph(N);
+	    
+	    path = new int[N];
+	    
+	    for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+		    graph.removeEdge(i, j);
+		}
+	    }
+	    
 	    cities = new String[N];
 	    for (int i = 0; i < N; i++) {
 		cities[i] = sc.next();
@@ -39,68 +48,52 @@ public class PlanningTour {
 			v = j;
 		    }
 		}
-		// if (u < v) {
-		graph.addEdge(u, v);
-		// } else {
-		// graph.addEdge(v, u);
-		// }
+//		if (u < v) {
+		    graph.addEdge(u, v);
+//		} else {
+//		    graph.addEdge(v, u);
+//		}
 	    }
-	    isHC();
-//	     System.out.println(Answer);
+	    findMinimumTour();
 	}
     }
-
-    public static boolean isHC() {
-
-	path = new int[N];
-	boolean[] visited = new boolean[N];
-	int pos = 1;
-	int source = 0;
-	path[0] = source;
-	visited[0] = true;
-
-	if (isHcUtil(visited, source, path, pos)) {
-	    printSolution(path);
-	    return true;
-	}
-	path[Answer] = 0;
-	printSolution(path);
-	return false;
-    }
-
-    public static boolean isHcUtil(boolean[] visited, int source, int[] path,
-	    int pos) {
-
-	if (pos == N) {
-	    return graph.isEdge(path[pos - 1], 0);
-	}
-
-	for (int v = 0; v < N; v++) {
-	    if (!visited[v] && graph.isEdge(source, v)) {
-		visited[v] = true;
-		path[pos] = v;
-		Answer = pos;
-		if (isHcUtil(visited, v, path, pos + 1)) {
-		    return true;
+    
+    public static void findMinimumTour(){
+	int[][] dp = new int[N][N];
+	
+	dp[0][0]=1;
+	
+	for (int i = 0; i < N; i++) {
+	    for (int j = i; j < N; j++) {
+		int count = 0;
+		for (int k = j; k >= 0; k--) {
+		    if (graph.isEdge(k, j)&&dp[i][k]>0) {
+			int temp=dp[i][k];
+			if (i!=j) {
+			    temp++;
+			}
+			count=Math.max(temp, count);
+		    }else if(i==j&&dp[0][i]>count){
+			count=dp[0][i];
+		    }
 		}
-
-		visited[v] = false;
+		dp[i][j]=dp[j][i]=count;
 	    }
 	}
-
-	return false;
+	System.out.println(dp[N-1][N-1]);
+	
     }
 
     public static void printSolution(int[] path) {
-//	System.out.print(path[0] + " ");
-	Answer=0;
+	System.out.print(path[0] + " ");
+	Answer = 0;
 	for (int i = 1; i < N; i++) {
 	    if (path[i] == 0) {
 		break;
 	    }
-	    Answer++;
-//	    System.out.print(path[i] + " ");
+	    // Answer++;
+	    System.out.print(path[i] + " ");
 	}
-	System.out.println(Answer+1);
+	// System.out.println(Answer + 1);
     }
 }
