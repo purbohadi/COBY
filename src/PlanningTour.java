@@ -21,15 +21,15 @@ public class PlanningTour {
 	    M = sc.nextInt();
 
 	    graph = new BidirectionalGraph(N);
-	    
+
 	    path = new int[N];
-	    
+
 	    for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 		    graph.removeEdge(i, j);
 		}
 	    }
-	    
+
 	    cities = new String[N];
 	    for (int i = 0; i < N; i++) {
 		cities[i] = sc.next();
@@ -48,40 +48,34 @@ public class PlanningTour {
 			v = j;
 		    }
 		}
-//		if (u < v) {
-		    graph.addEdge(u, v);
-//		} else {
-//		    graph.addEdge(v, u);
-//		}
+		graph.addEdge(u, v);
 	    }
-	    findMinimumTour();
+	    findMaximumTour();
 	}
     }
-    
-    public static void findMinimumTour(){
+
+    public static void findMaximumTour() {
 	int[][] dp = new int[N][N];
-	
-	dp[0][0]=1;
-	
+	dp[0][0] = 1;
 	for (int i = 0; i < N; i++) {
 	    for (int j = i; j < N; j++) {
 		int count = 0;
 		for (int k = j; k >= 0; k--) {
-		    if (graph.isEdge(k, j)&&dp[i][k]>0) {
-			int temp=dp[i][k];
-			if (i!=j) {
+		    if (graph.isEdge(k, j) && dp[i][k] > 0) {
+			int temp = dp[i][k];
+			if (i != j) {
 			    temp++;
 			}
-			count=Math.max(temp, count);
-		    }else if(i==j&&dp[0][i]>count){
-			count=dp[0][i];
+			count = Math.max(temp, count);
+		    } else if (i == j && dp[0][i] > count) {
+			count = dp[0][i];
 		    }
 		}
-		dp[i][j]=dp[j][i]=count;
+		dp[i][j] = dp[j][i] = count;
 	    }
 	}
-	System.out.println(dp[N-1][N-1]);
-	
+	System.out.println(dp[N - 1][N - 1]);
+
     }
 
     public static void printSolution(int[] path) {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class NetFlow {
 
     private static int S, D, N, E;
-    private static UndirectedWeightedGraph graph;
+    private static WeightedGraph graph;
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -19,7 +19,7 @@ public class NetFlow {
 	    D = sc.nextInt() - 1;
 	    E = sc.nextInt();
 
-	    graph = new UndirectedWeightedGraph(N);
+	    graph = new WeightedGraph(N);
 
 	    for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
