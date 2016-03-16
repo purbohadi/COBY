@@ -56,7 +56,7 @@ public class Interstellar {
 		nodes[idx++][1]=y1;
 		nodes[idx][0]=x2;
 		nodes[idx++][1]=y2;
-		graph.addEdge(idx-2, idx-1, weight);
+		graph.addEdge(idx-2, idx-1, 0);
 	    }
 
 	    for (int i = 0; i < limit; i++) {
@@ -68,8 +68,9 @@ public class Interstellar {
 		}
 	    }
 
+	    int result = countMSWithDjikstra(0, 1)-AnswerN;
 	    System.out.println("#" + (tes_case + 1) + " "
-		    + countMSWithDjikstra(0, 1));
+		    + result);
 	}
 
     }
@@ -94,11 +95,13 @@ public class Interstellar {
 
 	    shortPath[u] = true;
 	    for (int v = 0; v < limit; v++) {
-		if (!shortPath[v] && graph.getWeight(u, v) > 0
+		if (!shortPath[v] //&& graph.getWeight(u, v) > 0
 			&& distance[u] != Integer.MAX_VALUE
 			&& (distance[u] + graph.getWeight(u, v)) < distance[v]) {
 
 		    distance[v] = distance[u] + graph.getWeight(u, v);
+//		    if(graph.getWeight(u, v)<0)
+//			AnswerN+=graph.getWeight(u, v);
 		}
 	    }
 	}

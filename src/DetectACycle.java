@@ -3,8 +3,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class DetectACycle {
-    static int Answer, N;
+    static int Answer, N, cycleCount;
     static BidirectionalGraph graph;
+    static boolean[] marked;
+    static boolean onStack[];
 
     public static void main(String[] args) throws FileNotFoundException {
 	Scanner sc = new Scanner(new FileInputStream(
@@ -21,9 +23,12 @@ public class DetectACycle {
 	     */
 	    // ///////////////////////////////////////////////////////////////////////////////////////////
 	    // Answer = 0;
+	    cycleCount=0;
 	    while (sc.hasNextLine()) {
 		N = sc.nextInt();
 		graph = new BidirectionalGraph(N);
+		marked= new boolean[N];
+		onStack= new boolean[N];
 		sc.nextLine();
 		while (sc.hasNextLine()) {
 		    String line = sc.nextLine();
@@ -39,29 +44,46 @@ public class DetectACycle {
 		break;
 	    }
 
-	    if (isCyclic()) {
-		System.out.println("Contain cycle");
+	    if (hasCycle()) {
+		System.out.println("Contain cycle "+cycleCount);
 	    }else{
 		System.out.println("No cycle");
 	    }
 	}
     }
-
-    public static boolean isCyclic() {
-
-	boolean[] visited = new boolean[N];
-	boolean[] reStack = new boolean[N];
-	
+    
+    private static boolean hasCycle(){
 	for (int i = 0; i < N; i++) {
-	    if (DFS(i, visited, reStack)) {
+	    cycleCount = countCycle(i);
+	    if (cycleCount==1) {
 		return true;
 	    }
 	}
-	
 	return false;
     }
-
     
+    
+    private static int countCycle(int v){
+	marked[v]=true;
+	onStack[v]=true;
+	
+	for (int i = 0; i < N; i++) {
+	    if (graph.isEdge(v, i)) {
+		if (!marked[i]) {
+		    countCycle(i);
+		}else if(onStack[i]){
+		    cycleCount++;
+		}
+	    }
+	}
+	
+	onStack[v]=false;
+	
+	return cycleCount;
+    }
+    
+    
+
     public static boolean DFS(int v, boolean visited[], boolean reStack[]) {
 	
 	if (!visited[v]) {
@@ -69,8 +91,10 @@ public class DetectACycle {
 	    reStack[v]=true;
 	    for (int i = 0; i < N; ++i) {
 		if (graph.isEdge(v, i)) {
-		    if ((!visited[i]&&DFS(i, visited, reStack))
-			    ||reStack[i]) {
+		    if ((!visited[i]&&DFS(i, visited, reStack))) {
+			return true;
+		    }else if(reStack[i]){
+			cycleCount++;
 			return true;
 		    }
 		}
