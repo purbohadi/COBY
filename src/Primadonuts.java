@@ -41,11 +41,11 @@ public class Primadonuts {
 				if(index<size)
 					if(index<0){
 						for (int j = 0; j < size; j++) {
-							System.out.print((int)primes.get(j)+" ");
+							System.out.print(primes.get(j)+" ");
 						}
 						break;
 					}else
-						System.out.print((int)primes.get(index)+" ");
+						System.out.print(primes.get(index)+" ");
 				else
 					break;
 			}

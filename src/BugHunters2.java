@@ -24,7 +24,7 @@ public class BugHunters2 {
 		comparator = new Comparator<int[]>() {
 
 			public int compare(int[] a, int[] b) {
-				return Integer.compare(a[0], b[0]);
+				return a[0]>b[0]?a[0]:b[0];
 			}
 		};
 
